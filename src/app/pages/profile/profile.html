@@ -1,0 +1,71 @@
+@if (person(); as p) {
+  <section class="hero">
+    <app-leaf class="leaf-l" />
+    <div class="wrap hero-grid">
+      <div>
+        <a routerLink="/team" class="back">← Our team</a>
+        <span class="kicker">Profile</span>
+        <h1>{{ p.name }}</h1>
+        <p class="lead">{{ p.role }}</p>
+
+        <dl class="facts">
+          @for (f of p.facts; track f.label) {
+            <div>
+              <dt>{{ f.value }}</dt>
+              <dd>{{ f.label }}</dd>
+            </div>
+          }
+        </dl>
+      </div>
+      <figure class="frame portrait">
+        <img [src]="p.photo" [alt]="p.name" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap layout">
+      <article class="bio">
+        @for (para of p.bio; track $index) {
+          <p>{{ para }}</p>
+        }
+      </article>
+
+      <aside class="card">
+        <h2>{{ p.milestones[0].when ? 'Timeline' : 'Experience' }}</h2>
+        <ol class="timeline">
+          @for (m of p.milestones; track m.title) {
+            <li>
+              @if (m.when) {
+                <span class="when">{{ m.when }}</span>
+              }
+              <strong>{{ m.title }}</strong>
+              @if (m.detail) {
+                <span class="detail">{{ m.detail }}</span>
+              }
+            </li>
+          }
+        </ol>
+
+        @if (p.education.length) {
+          <h2>Education &amp; more</h2>
+          <ul class="edu">
+            @for (e of p.education; track e) {
+              <li>{{ e }}</li>
+            }
+          </ul>
+        }
+      </aside>
+    </div>
+
+    <div class="wrap">
+      <a class="next tile" [routerLink]="['/team', next().slug]">
+        <img class="monogram" [src]="next().photo" alt="" />
+        <span>
+          <small>Next profile</small>
+          <strong>{{ next().name }} →</strong>
+        </span>
+      </a>
+    </div>
+  </section>
+}

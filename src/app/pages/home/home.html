@@ -1,0 +1,129 @@
+<!-- Hero -->
+<section class="hero">
+  <app-leaf class="leaf-l" />
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">About us</span>
+      <h1>Curated content with <em>context</em>, not clutter.</h1>
+      <p class="lead">
+        In the ever-expanding digital content space, Charchalive stands out as an outlier. It offers
+        curated content, culled from authentic sources and covered with unique context, to add to
+        the ken of the visitors.
+      </p>
+    </div>
+    <figure class="frame">
+      <img src="images/about-hero.jpg" alt="A quiet café table — a place for conversation" />
+    </figure>
+  </div>
+</section>
+
+<!-- Perspective -->
+<section class="wrap perspective">
+  <blockquote class="quote">
+    We revel in our pithy content that contains <em>perspectives rather than prejudices.</em>
+  </blockquote>
+  <div class="copy">
+    <p>
+      The wide range — stretching from skin to spirituality — promises to be a delight for today’s
+      youth and even those who nurtured them.
+    </p>
+    <p>
+      From historical parliamentary debates to celebrated cases which added a new dimension to
+      Indian jurisprudence; from the latest in science &amp; tech to travel and tourism; and from
+      food recipes to fitness &amp; fashion tips, every section will contribute to any netizen’s
+      quest for an ‘informed and good’ living.
+    </p>
+  </div>
+</section>
+
+<!-- Topics -->
+<section class="section">
+  <div class="wrap">
+    <app-topic-carousel [items]="topics">
+      <div class="section-head">
+        <span class="kicker">What we cover</span>
+        <h2>From skin to spirituality</h2>
+      </div>
+    </app-topic-carousel>
+  </div>
+</section>
+
+<!-- Special sections: magazine spread -->
+<section class="section specials">
+  <app-leaf class="leaf-s" />
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker">Special sections</span>
+      <h2>Where the conversation goes <em>deeper</em></h2>
+    </div>
+
+    <div class="spread">
+      @if (specials[0]; as lead) {
+        <article class="lead-story">
+          <img [src]="lead.image" alt="" loading="lazy" />
+          <div class="lead-text">
+            <span class="tag">01 · {{ lead.tag }}</span>
+            <h3>Old texts, seen in a new light</h3>
+            <p>{{ lead.body }}</p>
+          </div>
+        </article>
+      }
+
+      <div class="side">
+        @for (s of specials.slice(1); track s.tag; let i = $index) {
+          <article class="side-story card">
+            <span class="media"><img [src]="s.image" alt="" loading="lazy" /></span>
+            <div>
+              <span class="tag">0{{ i + 2 }} · {{ s.tag }}</span>
+              <p>{{ s.body }}</p>
+              @if (s.tag === 'Your Corner') {
+                <a routerLink="/contact" class="more">Share your thoughts →</a>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team: portrait cards -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head split">
+      <div>
+        <span class="kicker">Our team</span>
+        <h2>The people behind the <em>conversation</em></h2>
+      </div>
+      <a routerLink="/team" class="more">All profiles →</a>
+    </div>
+    <div class="people">
+      @for (p of team; track p.slug) {
+        <a class="person" [routerLink]="['/team', p.slug]">
+          <figure class="frame">
+            <img [src]="p.photo" [alt]="p.name" loading="lazy" />
+          </figure>
+          <strong>{{ p.name }}</strong>
+          <small>{{ p.role }}</small>
+          <span class="fact"><b>{{ p.facts[0].value }}</b> {{ p.facts[0].label }}</span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA band -->
+<section class="cta">
+  <img src="images/contact-hero.jpg" alt="" loading="lazy" />
+  <div class="wrap cta-inner">
+    <div>
+      <span class="kicker">Your go-to digital destination</span>
+      <h2>Come, be part of the <em>charcha</em>.</h2>
+      <p>Charchalive seeks to generate lively conversations over diverse topics.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn" routerLink="/contact">Contact us</a>
+      <a class="btn ghost" routerLink="/team">Meet the team</a>
+    </div>
+  </div>
+</section>

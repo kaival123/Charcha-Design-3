@@ -1,0 +1,86 @@
+<section class="hero">
+  <app-leaf class="leaf-l" />
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">Contact</span>
+      <h1>Let’s start a <em>charcha</em>.</h1>
+      <p class="lead">
+        Have a story, a perspective or a person who deserves to be celebrated? Our ‘Your Corner’
+        invites you to join in and share your thoughts.
+      </p>
+
+      @if (hasDetails) {
+        <dl class="details">
+          @if (contact.email) {
+            <div>
+              <dt>Email</dt>
+              <dd><a [href]="'mailto:' + contact.email">{{ contact.email }}</a></dd>
+            </div>
+          }
+          @if (contact.phone) {
+            <div>
+              <dt>Phone</dt>
+              <dd><a [href]="'tel:' + contact.phone">{{ contact.phone }}</a></dd>
+            </div>
+          }
+          @if (contact.address) {
+            <div>
+              <dt>Address</dt>
+              <dd>{{ contact.address }}</dd>
+            </div>
+          }
+          @for (s of contact.socials; track s.url) {
+            <div>
+              <dt>{{ s.label }}</dt>
+              <dd><a [href]="s.url" target="_blank" rel="noopener">{{ s.url }}</a></dd>
+            </div>
+          }
+        </dl>
+      }
+    </div>
+    <figure class="frame">
+      <img src="images/contact-hero.jpg" alt="" />
+    </figure>
+  </div>
+</section>
+
+<section class="section form-section">
+  <div class="wrap">
+    <form class="card form" (submit)="submit($event)" novalidate>
+      @if (sent()) {
+        <div class="done" role="status">
+          <span aria-hidden="true">✓</span>
+          <h2>Thank you!</h2>
+          <p>Your message is in. We’ll get back to you soon.</p>
+          <button class="btn ghost" type="button" (click)="sent.set(false)">Send another</button>
+        </div>
+      } @else {
+        <h2>Write to us</h2>
+        <div class="row">
+          <label>
+            Name
+            <input name="name" required autocomplete="name" />
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" required autocomplete="email" />
+          </label>
+        </div>
+        <fieldset>
+          <legend>Topic</legend>
+          @for (t of topics; track t; let first = $first) {
+            <label class="chip">
+              <input type="radio" name="topic" [value]="t" [checked]="first" />
+              <span>{{ t }}</span>
+            </label>
+          }
+        </fieldset>
+        <label>
+          Message
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button class="btn" type="submit">Send message</button>
+      }
+    </form>
+  </div>
+</section>

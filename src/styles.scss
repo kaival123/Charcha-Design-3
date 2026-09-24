@@ -1,1 +1,329 @@
-/* You can add global styles to this file, and also import other style files */
+/* ---------- Theme tokens ----------
+   --brand / --accent are set at runtime by ThemeStore; everything else derives from them.
+   Default "Peacock" palette: teal brand, ink-navy accent (matches ThemeStore DEFAULT). */
+
+@mixin dark-tokens {
+  --bg: color-mix(in oklab, var(--brand) 12%, #0f1110);
+  --bg-alt: color-mix(in oklab, var(--brand) 18%, #131514);
+  --surface: color-mix(in oklab, var(--brand) 16%, #181a19);
+  --text: #eef0ea;
+  --muted: #a9b0a6;
+  --brand-ink: color-mix(in oklab, var(--brand) 60%, #fff);
+  --accent-ink: color-mix(in oklab, var(--accent) 65%, #fff);
+  --shadow: 0 1px 2px #0006, 0 14px 34px -14px #000a;
+  color-scheme: dark;
+}
+
+:root {
+  --brand: #0f6e6a;
+  --accent: #1f2a44;
+  --on-brand: #fff;
+  --on-accent: #fff;
+
+  /* Each preset supplies its own --paper; custom colours fall back to a derived tint.
+     Everything else is tinted from the palette, kept subtle for a professional look. */
+  --bg: var(--paper, color-mix(in oklab, var(--brand) 6%, #fafaf8));
+  --bg-alt: color-mix(in oklab, var(--brand) 7%, var(--bg));
+  --surface: color-mix(in oklab, var(--bg) 25%, #fff);
+  --text: color-mix(in oklab, var(--accent) 12%, #181b1f);
+  --muted: color-mix(in oklab, var(--accent) 12%, #5c626a);
+  --brand-ink: color-mix(in oklab, var(--brand) 90%, #000);
+  --accent-ink: var(--accent);
+  --shadow: 0 1px 2px #0000000a, 0 12px 28px -16px #0f172a33;
+
+  --line: color-mix(in oklab, var(--text) 11%, transparent);
+  --brand-soft: color-mix(in oklab, var(--brand) 8%, var(--surface));
+  --accent-soft: color-mix(in oklab, var(--accent) 7%, var(--surface));
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --radius: 14px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --max: 1140px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    @include dark-tokens;
+  }
+}
+:root[data-theme='dark'] {
+  @include dark-tokens;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 1rem/1.7 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+h1 em,
+h2 em {
+  font-style: italic;
+  color: var(--brand-ink);
+}
+
+p {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--brand-ink);
+}
+
+img {
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--brand);
+  color: var(--on-brand);
+}
+
+/* ---------- Shared building blocks ---------- */
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 0.9rem;
+  font: 600 0.72rem/1 var(--font-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand-ink);
+}
+
+.lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(48px, 7vw, 88px);
+}
+
+.section-head {
+  margin-bottom: 32px;
+
+  h2 {
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    margin: 0;
+  }
+}
+
+/* Hero: text left, framed photo right (Option 3). */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(40px, 7vw, 80px);
+  background:
+    radial-gradient(55% 70% at 100% 0%, color-mix(in oklab, var(--brand) 9%, transparent), transparent 70%),
+    radial-gradient(40% 60% at 0% 100%, color-mix(in oklab, var(--accent) 6%, transparent), transparent 70%);
+}
+
+.hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+
+  h1 {
+    font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  }
+}
+
+.frame {
+  position: relative;
+  margin: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 14px -14px -14px 14px;
+    z-index: -1;
+    border: 1.5px solid color-mix(in oklab, var(--brand) 45%, transparent);
+    border-radius: var(--radius);
+  }
+}
+
+.quote {
+  margin: 0;
+  padding-left: 22px;
+  border-left: 3px solid var(--brand);
+  font: 500 clamp(1.25rem, 2.2vw, 1.6rem) / 1.35 var(--font-display);
+
+  em {
+    font-style: italic;
+    color: var(--brand-ink);
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.75em 1.4em;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  background: var(--brand);
+  color: var(--on-brand);
+  font: 600 0.92rem/1 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px -8px var(--brand);
+  }
+  &.ghost {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--line);
+
+    &:hover {
+      box-shadow: none;
+      border-color: var(--brand);
+    }
+  }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Soft-tinted media card used for topics, team and specials. */
+.tile {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--tint, var(--brand-soft));
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:nth-child(3n + 2) {
+    --tint: var(--accent-soft);
+  }
+  &:nth-child(3n) {
+    --tint: color-mix(in oklab, var(--brand) 5%, var(--accent-soft));
+  }
+  > img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+}
+
+.tile-body {
+  padding: 16px 20px 20px;
+
+  h3 {
+    font-size: 1.12rem;
+    margin-bottom: 0.35em;
+  }
+  h3 b {
+    color: var(--brand-ink);
+    font-weight: 600;
+    margin-right: 0.25em;
+  }
+  p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+}
+
+.monogram {
+  display: block;
+  aspect-ratio: 1;
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), var(--accent));
+  object-fit: cover;
+  object-position: top;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .frame::after {
+    inset: 10px -8px -10px 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}

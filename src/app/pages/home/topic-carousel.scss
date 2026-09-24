@@ -1,0 +1,106 @@
+:host {
+  display: block;
+  --gap: 20px;
+  --per-view: 3;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.arrows {
+  display: flex;
+  gap: 8px;
+
+  button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text);
+    font: 400 1.6rem/1 var(--font-body);
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+
+    &:hover {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: var(--on-brand);
+    }
+  }
+}
+
+.track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--per-view) - 1) * var(--gap)) / var(--per-view));
+  gap: var(--gap);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &:focus-visible {
+    outline-offset: 6px;
+  }
+}
+
+.tile {
+  scroll-snap-align: start;
+  user-select: none;
+
+  &:hover {
+    transform: none;
+  }
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+
+  button {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: var(--line);
+    cursor: pointer;
+    transition: width 0.25s, background-color 0.25s;
+
+    &.on {
+      width: 26px;
+      background: var(--brand);
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  :host {
+    --per-view: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  :host {
+    --gap: 14px;
+    /* Show a sliver of the next card so it reads as swipeable. */
+    --per-view: 1.15;
+  }
+  .arrows {
+    display: none;
+  }
+}
