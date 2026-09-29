@@ -115,7 +115,7 @@ export const TEAM: Profile[] = [
   },
   {
     slug: 'abhilasha-daftuar',
-    name: 'Abhilasha Daftuar',
+    name: 'Abhilasha Daftuar (Founder)',
     initials: 'AD',
     photo: 'images/team/abhilasha-daftuar.jpg',
     role: 'International Relations graduate, researcher & writer',
