@@ -13,7 +13,7 @@ export class Contact {
   protected readonly hasDetails =
     !!(CONTACT.email || CONTACT.phone || CONTACT.address) || CONTACT.socials.length > 0;
   protected readonly sent = signal(false);
-  protected readonly topics = ['Your Corner', 'The Talk', 'Katha', 'General'];
+  protected readonly topics = ['Aapki Awaaz', 'Charcha', 'Katha', 'General'];
 
   protected submit(event: Event): void {
     event.preventDefault();

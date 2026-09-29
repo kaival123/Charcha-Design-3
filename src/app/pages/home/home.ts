@@ -15,9 +15,9 @@ export class Home {
 
   protected readonly topics: Topic[] = [
     {
-      title: 'Parliamentary Debates',
+      title: 'Rajneeti Se Pare',
       image: 'images/parliament.jpg',
-      body: 'Historical parliamentary debates, revisited with context.',
+      body: 'Historical Rajneeti Se Pare, revisited with context.',
     },
     {
       title: 'Landmark Cases',
@@ -30,17 +30,17 @@ export class Home {
       body: 'The latest in science and technology.',
     },
     {
-      title: 'Travel & Tourism',
+      title: 'Yayawar Ki Dairy',
       image: 'images/travel.jpg',
       body: 'Destinations, journeys and the stories behind them.',
     },
     {
-      title: 'Food & Recipes',
+      title: 'Khao Gali',
       image: 'images/food.jpg',
       body: 'Food recipes worth passing on.',
     },
     {
-      title: 'Fitness & Fashion',
+      title: 'Chust-Durast',
       image: 'images/fitness.jpg',
       body: 'Fitness and fashion tips for an ‘informed and good’ living.',
     },
@@ -53,12 +53,12 @@ export class Home {
       body: 'Strives to see the rich Indian mythological texts and spiritual tradition in a new light.',
     },
     {
-      tag: 'The Talk',
+      tag: 'Charcha',
       image: 'images/talk.jpg',
       body: 'Our podcast focuses the arc lights on those who may not be celebrities but deserve to be celebrated.',
     },
     {
-      tag: 'Your Corner',
+      tag: 'Aapki Awaaz',
       image: 'images/corner.jpg',
       body: 'Invites you to join in and share your thoughts.',
     },
